@@ -33,7 +33,7 @@ const manifest = {
 };
 const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
 const manifestUrl = URL.createObjectURL(blob);
-document.write(`<link rel="manifest" href="${manifestUrl}">`);
+document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
 </script>
 
 <style>
