@@ -1,0 +1,26 @@
+{
+  "name": "URL to Claude",
+  "short_name": "URL→Claude",
+  "description": "URL을 Claude 채팅으로 공유",
+  "start_url": "/url-to-claude/",
+  "scope": "/url-to-claude/",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#0f0f0f",
+  "share_target": {
+    "action": "/url-to-claude/",
+    "method": "GET",
+    "params": {
+      "url": "url",
+      "text": "text",
+      "title": "title"
+    }
+  },
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
