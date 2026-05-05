@@ -216,6 +216,28 @@
   }
   .btn-claude:hover { border-color: #3a3a3a; }
 
+  /* Quick links */
+  .quick-links { margin-bottom: 14px; }
+  .quick-link-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--dim2);
+    border: 1px solid var(--dim);
+    border-radius: 4px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .quick-link-item:hover { border-color: #3a3a3a; background: #1e1e1e; }
+  .quick-link-item:active { transform: scale(0.99); }
+  .ql-icon { font-size: 15px; flex-shrink: 0; }
+  .ql-info { flex: 1; min-width: 0; }
+  .ql-name { font-size: 11px; color: var(--fg); letter-spacing: 0.02em; }
+  .ql-url { font-size: 10px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; }
+  .ql-action { font-size: 10px; color: var(--accent); flex-shrink: 0; letter-spacing: 0.05em; }
+
   /* History */
   .hist { margin-top: 22px; border-top: 1px solid #181818; padding-top: 14px; }
   .hist-lbl { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 9px; }
@@ -265,6 +287,14 @@
     </div>
     <div class="token-hint">입력 시 X(트위터) URL 공유할 때 트윗 내용을 자동으로 가져옵니다</div>
   </div>
+
+  <div class="divider"></div>
+
+  <!-- Quick Links -->
+  <div class="row-label">
+    <div class="lbl">프로젝트 바로가기</div>
+  </div>
+  <div class="quick-links" id="quickLinks"></div>
 
   <div class="divider"></div>
 
@@ -459,8 +489,40 @@ function renderHist() {
   }).join('');
 }
 
+// Project quick links
+const PROJECT_LINKS = [
+  {
+    name: 'URL 아카이브 노션 DB',
+    url: 'https://www.notion.so/URL-35773012110d809c8953f820f7ba8fea',
+    icon: '📋'
+  }
+];
+
+function renderQuickLinks() {
+  const el = document.getElementById('quickLinks');
+  el.innerHTML = PROJECT_LINKS.map((p, i) => `
+    <div class="quick-link-item" onclick="quickLoad(${i})">
+      <div class="ql-icon">${p.icon}</div>
+      <div class="ql-info">
+        <div class="ql-name">${p.name}</div>
+        <div class="ql-url">${p.url}</div>
+      </div>
+      <div class="ql-action">로드 →</div>
+    </div>
+  `).join('');
+}
+
+function quickLoad(i) {
+  const p = PROJECT_LINKS[i];
+  applyUrl(p.url);
+  // 스크롤을 URL박스로 이동
+  document.getElementById('urlBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+
 function init() {
   loadToken();
+  renderQuickLinks();
   const p = new URLSearchParams(window.location.search);
   const shared = p.get('url') || p.get('text') || p.get('title');
   if (shared) {
