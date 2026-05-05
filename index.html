@@ -463,6 +463,7 @@ function sendToClaude() {
   window.open(`https://claude.ai/project/019df9cc-647b-7014-b683-863cc0b52765?q=${msg}`, '_blank');
 }
 
+function setUrl() {
   const v = document.getElementById('urlInput').value.trim();
   if (v) applyUrl(v);
 }
