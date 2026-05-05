@@ -4,37 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="theme-color" content="#0f0f0f">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="URL→Claude">
 <title>URL → Claude</title>
+<link rel="manifest" href="/upload-urls/manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-
-<!-- PWA Manifest inline -->
-<script>
-const manifest = {
-  name: "URL to Claude",
-  short_name: "URL→Claude",
-  description: "URL을 Claude 채팅으로 공유",
-  start_url: ".",
-  display: "standalone",
-  background_color: "#0f0f0f",
-  theme_color: "#0f0f0f",
-  share_target: {
-    action: "/",
-    method: "GET",
-    params: { url: "url", text: "text", title: "title" }
-  },
-  icons: [{
-    src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f0f0f'/><text y='.9em' font-size='80' x='10'>🔗</text></svg>",
-    sizes: "any",
-    type: "image/svg+xml"
-  }]
-};
-const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-const manifestUrl = URL.createObjectURL(blob);
-document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
-</script>
 
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -66,7 +42,6 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     position: relative;
   }
 
-  /* Background grid */
   body::before {
     content: '';
     position: fixed;
@@ -85,11 +60,7 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     z-index: 1;
   }
 
-  /* Header */
-  .hd {
-    margin-bottom: 40px;
-  }
-
+  .hd { margin-bottom: 40px; }
   .hd-label {
     font-size: 10px;
     letter-spacing: 0.3em;
@@ -97,7 +68,6 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     color: var(--accent);
     margin-bottom: 6px;
   }
-
   .hd-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 64px;
@@ -105,11 +75,7 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     letter-spacing: 0.02em;
     color: var(--fg);
   }
-
-  .hd-title span {
-    color: var(--accent);
-  }
-
+  .hd-title span { color: var(--accent); }
   .hd-sub {
     font-size: 11px;
     color: var(--text-dim);
@@ -117,7 +83,6 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     letter-spacing: 0.05em;
   }
 
-  /* URL display box */
   .url-box {
     background: var(--dim2);
     border: 1px solid var(--dim);
@@ -136,9 +101,7 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
   .url-box::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    left: 0; top: 0; bottom: 0;
     width: 2px;
     background: var(--accent);
     transform: scaleY(0);
@@ -146,13 +109,8 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     transform-origin: top;
   }
 
-  .url-box.has-url::before {
-    transform: scaleY(1);
-  }
-
-  .url-box.has-url {
-    border-color: #333;
-  }
+  .url-box.has-url::before { transform: scaleY(1); }
+  .url-box.has-url { border-color: #333; }
 
   .url-label {
     font-size: 9px;
@@ -176,7 +134,6 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     line-height: 1.6;
   }
 
-  /* Manual input */
   .input-row {
     display: flex;
     gap: 8px;
@@ -214,7 +171,6 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
   }
   .btn-set:hover { background: #333; }
 
-  /* Main button */
   .btn-copy {
     width: 100%;
     background: var(--accent);
@@ -227,20 +183,8 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     letter-spacing: 0.1em;
     cursor: pointer;
     transition: all 0.15s;
-    position: relative;
-    overflow: hidden;
     margin-bottom: 10px;
   }
-
-  .btn-copy::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0);
-    transition: background 0.15s;
-  }
-
-  .btn-copy:hover::after { background: rgba(255,255,255,0.08); }
   .btn-copy:active { transform: scale(0.98); }
   .btn-copy:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
@@ -254,15 +198,14 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     cursor: pointer;
-    transition: all 0.15s;
     text-decoration: none;
     display: block;
     text-align: center;
     letter-spacing: 0.05em;
+    transition: border-color 0.15s;
   }
   .btn-open:hover { border-color: var(--fg); }
 
-  /* Toast */
   .toast {
     position: fixed;
     bottom: 40px;
@@ -281,19 +224,13 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     pointer-events: none;
     z-index: 100;
   }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  /* History */
   .history {
     margin-top: 28px;
     border-top: 1px solid var(--dim);
     padding-top: 16px;
   }
-
   .history-label {
     font-size: 9px;
     letter-spacing: 0.25em;
@@ -301,7 +238,6 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     color: var(--text-dim);
     margin-bottom: 10px;
   }
-
   .history-item {
     display: flex;
     align-items: center;
@@ -311,48 +247,11 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     cursor: pointer;
     transition: opacity 0.15s;
   }
-
   .history-item:hover { opacity: 0.7; }
   .history-item:last-child { border-bottom: none; }
-
-  .hi-dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
-
-  .hi-url {
-    flex: 1;
-    font-size: 11px;
-    color: var(--text-dim);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .hi-copy {
-    font-size: 10px;
-    color: var(--accent);
-    flex-shrink: 0;
-  }
-
-  /* Install hint */
-  .install-hint {
-    margin-top: 20px;
-    padding: 12px;
-    border: 1px dashed #2a2a2a;
-    border-radius: 4px;
-    font-size: 10px;
-    color: var(--text-dim);
-    line-height: 1.6;
-    letter-spacing: 0.02em;
-    display: none;
-  }
-
-  .install-hint.show { display: block; }
-  .install-hint strong { color: var(--fg); }
+  .hi-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .hi-url { flex: 1; font-size: 11px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hi-copy { font-size: 10px; color: var(--accent); flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -364,39 +263,27 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
     <div class="hd-sub">공유받은 URL을 Claude 채팅에 붙여넣기</div>
   </div>
 
-  <!-- URL Display -->
   <div class="url-box" id="urlBox">
     <div class="url-label">감지된 URL</div>
-    <div class="url-placeholder" id="urlPlaceholder">
-      공유하기로 전달하거나<br>아래에 직접 입력하세요
-    </div>
+    <div class="url-placeholder" id="urlPlaceholder">공유하기로 전달하거나<br>아래에 직접 입력하세요</div>
     <div class="url-text" id="urlText" style="display:none"></div>
   </div>
 
-  <!-- Manual input -->
   <div class="input-row">
     <input type="url" id="urlInput" placeholder="https://..." />
     <button class="btn-set" onclick="setUrl()">설정</button>
   </div>
 
-  <!-- Actions -->
   <button class="btn-copy" id="copyBtn" onclick="copyToClipboard()" disabled>
     클립보드에 복사
   </button>
-  <a href="https://claude.ai" target="_blank" class="btn-open" id="claudeLink">
+  <a href="https://claude.ai" target="_blank" class="btn-open">
     Claude 채팅 열기 →
   </a>
 
-  <!-- History -->
   <div class="history" id="historySection" style="display:none">
     <div class="history-label">최근 기록</div>
     <div id="historyList"></div>
-  </div>
-
-  <!-- Install hint -->
-  <div class="install-hint" id="installHint">
-    💡 <strong>홈 화면에 추가</strong>하면 공유 타겟으로 등록돼요.<br>
-    Safari → 공유 버튼 → 홈 화면에 추가
   </div>
 
 </div>
@@ -405,34 +292,19 @@ document.write(`<link rel="manifest" href="/url-to-claude/manifest.json">`);
 
 <script>
 let currentUrl = '';
-let history = JSON.parse(localStorage.getItem('url_history') || '[]');
+let hist = JSON.parse(localStorage.getItem('url_history') || '[]');
 
-// Check URL params (from share target or manual)
 function init() {
   const params = new URLSearchParams(window.location.search);
-  const sharedUrl = params.get('url') || params.get('text') || params.get('title');
+  const shared = params.get('url') || params.get('text') || params.get('title');
 
-  if (sharedUrl) {
-    // Extract URL if mixed with text
-    const urlMatch = sharedUrl.match(/https?:\/\/[^\s]+/);
-    if (urlMatch) {
-      applyUrl(urlMatch[0]);
-    } else {
-      applyUrl(sharedUrl);
-    }
-    // Clean URL bar
+  if (shared) {
+    const match = shared.match(/https?:\/\/[^\s]+/);
+    applyUrl(match ? match[0] : shared);
     window.history.replaceState({}, '', window.location.pathname);
   }
 
   renderHistory();
-
-  // Show install hint on mobile Safari
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  const isMobile = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const isStandalone = window.navigator.standalone;
-  if (isMobile && isSafari && !isStandalone) {
-    document.getElementById('installHint').classList.add('show');
-  }
 }
 
 function applyUrl(url) {
@@ -447,62 +319,49 @@ function applyUrl(url) {
 
 function setUrl() {
   const val = document.getElementById('urlInput').value.trim();
-  if (!val) return;
-  applyUrl(val);
+  if (val) applyUrl(val);
 }
 
 async function copyToClipboard() {
   if (!currentUrl) return;
-
   try {
     await navigator.clipboard.writeText(currentUrl);
-    showToast('✓ 복사됨! Claude에 붙여넣기 하세요');
-    saveHistory(currentUrl);
-    renderHistory();
-
-    // Button feedback
-    const btn = document.getElementById('copyBtn');
-    const orig = btn.textContent;
-    btn.textContent = '복사 완료 ✓';
-    btn.style.background = '#22c55e';
-    setTimeout(() => {
-      btn.textContent = orig;
-      btn.style.background = '';
-    }, 2000);
-  } catch (e) {
-    // Fallback
+  } catch(e) {
     const ta = document.createElement('textarea');
     ta.value = currentUrl;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
+    ta.style.cssText = 'position:fixed;opacity:0';
     document.body.appendChild(ta);
-    ta.focus();
-    ta.select();
+    ta.focus(); ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
-    showToast('✓ 복사됨! Claude에 붙여넣기 하세요');
-    saveHistory(currentUrl);
-    renderHistory();
   }
+  showToast('✓ 복사됨! Claude에 붙여넣기 하세요');
+  saveHistory(currentUrl);
+
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = '복사 완료 ✓';
+  btn.style.background = '#22c55e';
+  setTimeout(() => { btn.textContent = '클립보드에 복사'; btn.style.background = ''; }, 2000);
 }
 
 function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2500);
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
 function saveHistory(url) {
-  history = [url, ...history.filter(u => u !== url)].slice(0, 5);
-  localStorage.setItem('url_history', JSON.stringify(history));
+  hist = [url, ...hist.filter(u => u !== url)].slice(0, 5);
+  localStorage.setItem('url_history', JSON.stringify(hist));
+  renderHistory();
 }
 
 function renderHistory() {
-  if (history.length === 0) return;
+  if (!hist.length) return;
   document.getElementById('historySection').style.display = 'block';
-  document.getElementById('historyList').innerHTML = history.map(url => `
-    <div class="history-item" onclick="applyUrl('${url.replace(/'/g, "\\'")}')">
+  document.getElementById('historyList').innerHTML = hist.map(url => `
+    <div class="history-item" onclick="applyUrl(${JSON.stringify(url)})">
       <div class="hi-dot"></div>
       <div class="hi-url">${url}</div>
       <div class="hi-copy">선택</div>
@@ -510,7 +369,6 @@ function renderHistory() {
   `).join('');
 }
 
-// Enter key
 document.getElementById('urlInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') setUrl();
 });
