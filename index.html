@@ -20,25 +20,21 @@
     --fg: #f0ebe3;
     --accent: #ff4d1c;
     --accent2: #ffd166;
+    --accent-x: #1d9bf0;
+    --green: #22c55e;
     --dim: #2a2a2a;
     --dim2: #1a1a1a;
-    --text-dim: #666;
+    --text-dim: #555;
   }
 
-  html, body {
-    height: 100%;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: 'DM Mono', monospace;
-    overflow: hidden;
-  }
+  html, body { background: var(--bg); color: var(--fg); font-family: 'DM Mono', monospace; }
 
   body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 24px;
+    padding: 28px 20px 60px;
+    min-height: 100vh;
     position: relative;
   }
 
@@ -51,53 +47,97 @@
       linear-gradient(90deg, rgba(255,77,28,0.03) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none;
+    z-index: 0;
   }
 
-  .wrap {
-    width: 100%;
-    max-width: 420px;
-    position: relative;
-    z-index: 1;
-  }
+  .wrap { width: 100%; max-width: 420px; position: relative; z-index: 1; }
 
-  .hd { margin-bottom: 40px; }
-  .hd-label {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 6px;
-  }
-  .hd-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 64px;
-    line-height: 0.9;
-    letter-spacing: 0.02em;
-    color: var(--fg);
-  }
+  .hd { margin-bottom: 28px; }
+  .hd-label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .hd-title { font-family: 'Bebas Neue', sans-serif; font-size: 52px; line-height: 0.9; color: var(--fg); }
   .hd-title span { color: var(--accent); }
-  .hd-sub {
-    font-size: 11px;
-    color: var(--text-dim);
-    margin-top: 10px;
-    letter-spacing: 0.05em;
+  .hd-sub { font-size: 11px; color: var(--text-dim); margin-top: 8px; letter-spacing: 0.04em; }
+
+  .divider { height: 1px; background: #1c1c1c; margin: 18px 0; }
+
+  .row-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
   }
 
+  .lbl {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .badge {
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .badge-green { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+  .badge-x { background: rgba(29,155,240,0.1); color: var(--accent-x); border: 1px solid rgba(29,155,240,0.22); }
+
+  .flex-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .flex-row input { flex: 1; }
+
+  .pw-wrap { flex: 1; position: relative; }
+  .pw-wrap input { width: 100%; padding-right: 36px; }
+  .btn-eye {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: var(--text-dim);
+    font-size: 13px; cursor: pointer; padding: 4px; line-height: 1;
+  }
+
+  input {
+    background: var(--dim2);
+    border: 1px solid var(--dim);
+    border-radius: 4px;
+    padding: 11px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--fg);
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+  }
+  input::placeholder { color: var(--text-dim); }
+  input:focus { border-color: var(--accent); }
+
+  .btn {
+    background: var(--dim);
+    color: var(--fg);
+    border: none;
+    border-radius: 4px;
+    padding: 11px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: #303030; }
+  .btn.muted { color: var(--text-dim); }
+
+  .token-hint { font-size: 10px; color: var(--text-dim); margin-top: 5px; letter-spacing: 0.02em; line-height: 1.5; }
+
+  /* URL box */
   .url-box {
     background: var(--dim2);
     border: 1px solid var(--dim);
     border-radius: 4px;
-    padding: 16px;
-    margin-bottom: 12px;
-    min-height: 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    padding: 14px;
+    margin-bottom: 10px;
+    min-height: 70px;
     position: relative;
     overflow: hidden;
     transition: border-color 0.2s;
   }
-
   .url-box::before {
     content: '';
     position: absolute;
@@ -108,150 +148,96 @@
     transition: transform 0.3s ease;
     transform-origin: top;
   }
-
   .url-box.has-url::before { transform: scaleY(1); }
-  .url-box.has-url { border-color: #333; }
+  .url-box.is-x::before { background: var(--accent-x); }
 
-  .url-label {
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
+  .url-type { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 5px; }
+  .url-type.x { color: var(--accent-x); }
+  .url-val { font-size: 11px; color: var(--fg); word-break: break-all; line-height: 1.5; opacity: 0.8; }
+  .url-empty { font-size: 12px; color: var(--text-dim); font-style: italic; line-height: 1.7; }
 
-  .url-text {
-    font-size: 12px;
-    color: var(--fg);
-    word-break: break-all;
-    line-height: 1.5;
-    opacity: 0.9;
-  }
-
-  .url-placeholder {
-    font-size: 12px;
-    color: var(--text-dim);
-    font-style: italic;
-    line-height: 1.6;
-  }
-
-  .input-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-
-  input[type="url"] {
-    flex: 1;
-    background: var(--dim2);
-    border: 1px solid var(--dim);
+  /* Tweet preview */
+  .tweet-box {
+    background: rgba(29,155,240,0.05);
+    border: 1px solid rgba(29,155,240,0.14);
     border-radius: 4px;
-    padding: 12px 14px;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--fg);
-    outline: none;
-    transition: border-color 0.15s;
-    -webkit-appearance: none;
+    padding: 14px;
+    margin-bottom: 10px;
+    display: none;
+    animation: fadeUp 0.2s ease;
   }
+  .tweet-box.show { display: block; }
+  .tweet-who { font-size: 11px; color: var(--accent-x); margin-bottom: 6px; }
+  .tweet-text { font-size: 12px; line-height: 1.65; color: var(--fg); opacity: 0.88; }
 
-  input[type="url"]::placeholder { color: var(--text-dim); }
-  input[type="url"]:focus { border-color: var(--accent); }
+  /* Status */
+  .status { display: none; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 4px; font-size: 11px; margin-bottom: 10px; }
+  .status.show { display: flex; }
+  .status.loading { background: rgba(29,155,240,0.07); border: 1px solid rgba(29,155,240,0.18); color: var(--accent-x); }
+  .status.error { background: rgba(255,77,28,0.07); border: 1px solid rgba(255,77,28,0.18); color: #ff6b4a; }
 
-  .btn-set {
-    background: var(--dim);
-    color: var(--fg);
-    border: none;
-    border-radius: 4px;
-    padding: 12px 16px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    cursor: pointer;
-    transition: background 0.15s;
-    white-space: nowrap;
-  }
-  .btn-set:hover { background: #333; }
+  .spinner { width: 12px; height: 12px; border: 1.5px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
+  /* Copy button */
   .btn-copy {
     width: 100%;
     background: var(--accent);
     color: white;
     border: none;
     border-radius: 4px;
-    padding: 18px;
+    padding: 15px;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
+    font-size: 19px;
     letter-spacing: 0.1em;
     cursor: pointer;
     transition: all 0.15s;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .btn-copy:active { transform: scale(0.98); }
-  .btn-copy:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .btn-copy:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+  .btn-copy.ok { background: var(--green); }
 
-  .btn-open {
+  .btn-claude {
     width: 100%;
     background: transparent;
     color: var(--fg);
     border: 1px solid var(--dim);
     border-radius: 4px;
-    padding: 14px;
+    padding: 12px;
     font-family: 'DM Mono', monospace;
     font-size: 12px;
-    cursor: pointer;
     text-decoration: none;
     display: block;
     text-align: center;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     transition: border-color 0.15s;
   }
-  .btn-open:hover { border-color: var(--fg); }
+  .btn-claude:hover { border-color: #3a3a3a; }
 
+  /* History */
+  .hist { margin-top: 22px; border-top: 1px solid #181818; padding-top: 14px; }
+  .hist-lbl { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 9px; }
+  .hist-item { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid #141414; cursor: pointer; transition: opacity 0.15s; }
+  .hist-item:hover { opacity: 0.6; }
+  .hist-item:last-child { border-bottom: none; }
+  .h-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .h-dot.x { background: var(--accent-x); }
+  .h-url { flex: 1; font-size: 11px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .h-pick { font-size: 10px; color: var(--text-dim); flex-shrink: 0; }
+
+  /* Toast */
   .toast {
-    position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--accent2);
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    opacity: 0;
-    transition: all 0.25s ease;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 100;
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(14px);
+    background: var(--accent2); color: #000;
+    padding: 9px 16px; border-radius: 4px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.03em;
+    opacity: 0; transition: all 0.2s ease;
+    white-space: nowrap; pointer-events: none; z-index: 100;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  .history {
-    margin-top: 28px;
-    border-top: 1px solid var(--dim);
-    padding-top: 16px;
-  }
-  .history-label {
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 10px;
-  }
-  .history-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 0;
-    border-bottom: 1px solid #1a1a1a;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-  .history-item:hover { opacity: 0.7; }
-  .history-item:last-child { border-bottom: none; }
-  .hi-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-  .hi-url { flex: 1; font-size: 11px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .hi-copy { font-size: 10px; color: var(--accent); flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -259,120 +245,233 @@
 
   <div class="hd">
     <div class="hd-label">URL Sharer</div>
-    <div class="hd-title">URL<br><span>→</span><br>CLAUDE</div>
-    <div class="hd-sub">공유받은 URL을 Claude 채팅에 붙여넣기</div>
+    <div class="hd-title">URL <span>→</span> CLAUDE</div>
+    <div class="hd-sub">공유받은 URL을 Claude 채팅에 바로 전달</div>
   </div>
 
+  <!-- X Bearer Token -->
+  <div>
+    <div class="row-label">
+      <div class="lbl">𝕏 Bearer Token</div>
+      <div class="badge badge-x" id="tokenBadge" style="display:none">저장됨 ✓</div>
+    </div>
+    <div class="flex-row">
+      <div class="pw-wrap">
+        <input type="password" id="tokenInput" placeholder="X API Bearer Token (선택 사항)" />
+        <button class="btn-eye" onclick="togglePw()">👁</button>
+      </div>
+      <button class="btn" onclick="saveToken()">저장</button>
+      <button class="btn muted" onclick="clearToken()">삭제</button>
+    </div>
+    <div class="token-hint">입력 시 X(트위터) URL 공유할 때 트윗 내용을 자동으로 가져옵니다</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- URL display -->
+  <div class="row-label">
+    <div class="lbl">감지된 URL</div>
+  </div>
   <div class="url-box" id="urlBox">
-    <div class="url-label">감지된 URL</div>
-    <div class="url-placeholder" id="urlPlaceholder">공유하기로 전달하거나<br>아래에 직접 입력하세요</div>
-    <div class="url-text" id="urlText" style="display:none"></div>
+    <div class="url-empty" id="urlEmpty">공유하기로 전달하거나<br>아래에 직접 입력하세요</div>
+    <div id="urlMeta" style="display:none">
+      <div class="url-type" id="urlType"></div>
+      <div class="url-val" id="urlVal"></div>
+    </div>
   </div>
 
-  <div class="input-row">
-    <input type="url" id="urlInput" placeholder="https://..." />
-    <button class="btn-set" onclick="setUrl()">설정</button>
+  <!-- Tweet preview -->
+  <div class="tweet-box" id="tweetBox">
+    <div class="tweet-who" id="tweetWho"></div>
+    <div class="tweet-text" id="tweetText"></div>
   </div>
 
-  <button class="btn-copy" id="copyBtn" onclick="copyToClipboard()" disabled>
-    클립보드에 복사
-  </button>
-  <a href="https://claude.ai" target="_blank" class="btn-open">
-    Claude 채팅 열기 →
-  </a>
+  <!-- Status -->
+  <div class="status" id="statusEl"></div>
 
-  <div class="history" id="historySection" style="display:none">
-    <div class="history-label">최근 기록</div>
-    <div id="historyList"></div>
+  <!-- Manual input -->
+  <div class="flex-row" style="margin-bottom:14px">
+    <input type="url" id="urlInput" placeholder="https://" style="flex:1" />
+    <button class="btn" onclick="setUrl()">설정</button>
+  </div>
+
+  <!-- Actions -->
+  <button class="btn-copy" id="copyBtn" onclick="doCopy()" disabled>클립보드에 복사</button>
+  <a href="https://claude.ai" target="_blank" class="btn-claude">Claude 채팅 열기 →</a>
+
+  <!-- History -->
+  <div class="hist" id="histSection" style="display:none">
+    <div class="hist-lbl">최근 기록</div>
+    <div id="histList"></div>
   </div>
 
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
 let currentUrl = '';
-let hist = JSON.parse(localStorage.getItem('url_history') || '[]');
+let copyText = '';
+let hist = [];
 
-function init() {
-  const params = new URLSearchParams(window.location.search);
-  const shared = params.get('url') || params.get('text') || params.get('title');
+try { hist = JSON.parse(localStorage.getItem('url_hist') || '[]'); } catch(e) {}
 
-  if (shared) {
-    const match = shared.match(/https?:\/\/[^\s]+/);
-    applyUrl(match ? match[0] : shared);
-    window.history.replaceState({}, '', window.location.pathname);
-  }
-
-  renderHistory();
+// Token
+function loadToken() {
+  const t = localStorage.getItem('x_bearer') || '';
+  if (t) { document.getElementById('tokenInput').value = t; showTokenBadge(true); }
+  return t;
+}
+function saveToken() {
+  const t = document.getElementById('tokenInput').value.trim();
+  if (!t) { toast('토큰을 입력해주세요'); return; }
+  localStorage.setItem('x_bearer', t);
+  showTokenBadge(true);
+  toast('✓ Bearer Token 저장됨');
+}
+function clearToken() {
+  localStorage.removeItem('x_bearer');
+  document.getElementById('tokenInput').value = '';
+  showTokenBadge(false);
+  toast('토큰 삭제됨');
+}
+function showTokenBadge(v) {
+  document.getElementById('tokenBadge').style.display = v ? 'inline-flex' : 'none';
+}
+function togglePw() {
+  const i = document.getElementById('tokenInput');
+  i.type = i.type === 'password' ? 'text' : 'password';
 }
 
-function applyUrl(url) {
+function isX(url) { return /^https?:\/\/(www\.)?(twitter|x)\.com\//.test(url); }
+function getTweetId(url) { const m = url.match(/status\/(\d+)/); return m ? m[1] : null; }
+
+function setStatus(type, msg, spin = false) {
+  const el = document.getElementById('statusEl');
+  el.className = `status show ${type}`;
+  el.innerHTML = spin ? `<div class="spinner"></div><span>${msg}</span>` : `<span>${msg}</span>`;
+}
+function clearStatus() { document.getElementById('statusEl').className = 'status'; }
+
+async function applyUrl(url) {
   currentUrl = url.trim();
-  document.getElementById('urlPlaceholder').style.display = 'none';
-  document.getElementById('urlText').style.display = 'block';
-  document.getElementById('urlText').textContent = currentUrl;
-  document.getElementById('urlBox').classList.add('has-url');
-  document.getElementById('copyBtn').disabled = false;
+  copyText = currentUrl;
+
+  document.getElementById('urlEmpty').style.display = 'none';
+  document.getElementById('urlMeta').style.display = 'block';
+  document.getElementById('urlVal').textContent = currentUrl;
+  document.getElementById('tweetBox').classList.remove('show');
+  clearStatus();
+
+  const xUrl = isX(currentUrl);
+  const box = document.getElementById('urlBox');
+  box.classList.add('has-url');
+  box.classList.toggle('is-x', xUrl);
+
+  const typeEl = document.getElementById('urlType');
+  typeEl.textContent = xUrl ? '𝕏  Twitter / X' : '🔗  웹 URL';
+  typeEl.className = xUrl ? 'url-type x' : 'url-type';
+
   document.getElementById('urlInput').value = currentUrl;
+  document.getElementById('copyBtn').disabled = false;
+
+  if (xUrl) {
+    const id = getTweetId(currentUrl);
+    const token = localStorage.getItem('x_bearer') || '';
+    if (id && token) {
+      await fetchTweet(id, token);
+    } else if (id && !token) {
+      setStatus('error', 'Bearer Token을 저장하면 트윗 내용도 함께 복사돼요');
+    }
+  }
+}
+
+async function fetchTweet(id, token) {
+  setStatus('loading', '트윗 내용 가져오는 중...', true);
+  try {
+    const res = await fetch(
+      `https://api.twitter.com/2/tweets/${id}?tweet.fields=text,created_at&expansions=author_id&user.fields=name,username`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (!res.ok) throw new Error(`X API 오류 (${res.status})`);
+    const data = await res.json();
+    const tweet = data.data;
+    const user = data.includes?.users?.[0];
+    const who = user ? `${user.name} (@${user.username})` : '';
+    copyText = `${currentUrl}\n\n${who ? who + '\n' : ''}${tweet.text}`;
+    document.getElementById('tweetWho').textContent = who;
+    document.getElementById('tweetText').textContent = tweet.text;
+    document.getElementById('tweetBox').classList.add('show');
+    clearStatus();
+  } catch(e) {
+    setStatus('error', e.message + ' — URL만 복사됩니다');
+  }
 }
 
 function setUrl() {
-  const val = document.getElementById('urlInput').value.trim();
-  if (val) applyUrl(val);
+  const v = document.getElementById('urlInput').value.trim();
+  if (v) applyUrl(v);
 }
 
-async function copyToClipboard() {
+async function doCopy() {
   if (!currentUrl) return;
   try {
-    await navigator.clipboard.writeText(currentUrl);
+    await navigator.clipboard.writeText(copyText);
   } catch(e) {
     const ta = document.createElement('textarea');
-    ta.value = currentUrl;
+    ta.value = copyText;
     ta.style.cssText = 'position:fixed;opacity:0';
     document.body.appendChild(ta);
     ta.focus(); ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
   }
-  showToast('✓ 복사됨! Claude에 붙여넣기 하세요');
-  saveHistory(currentUrl);
-
+  const hasTweet = !!document.getElementById('tweetBox').classList.contains('show');
+  toast('✓ ' + (hasTweet ? '트윗 내용 복사됨! Claude에 붙여넣기 하세요' : 'URL 복사됨! Claude에 붙여넣기 하세요'));
+  saveHist(currentUrl, isX(currentUrl));
   const btn = document.getElementById('copyBtn');
-  btn.textContent = '복사 완료 ✓';
-  btn.style.background = '#22c55e';
-  setTimeout(() => { btn.textContent = '클립보드에 복사'; btn.style.background = ''; }, 2000);
+  btn.textContent = '복사 완료 ✓'; btn.classList.add('ok');
+  setTimeout(() => { btn.textContent = '클립보드에 복사'; btn.classList.remove('ok'); }, 2000);
 }
 
-function showToast(msg) {
+function toast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
 }
 
-function saveHistory(url) {
-  hist = [url, ...hist.filter(u => u !== url)].slice(0, 5);
-  localStorage.setItem('url_history', JSON.stringify(hist));
-  renderHistory();
+function saveHist(url, x) {
+  hist = [{ url, x }, ...hist.filter(h => (h.url||h) !== url)].slice(0, 8);
+  localStorage.setItem('url_hist', JSON.stringify(hist));
+  renderHist();
 }
 
-function renderHistory() {
+function renderHist() {
   if (!hist.length) return;
-  document.getElementById('historySection').style.display = 'block';
-  document.getElementById('historyList').innerHTML = hist.map(url => `
-    <div class="history-item" onclick="applyUrl(${JSON.stringify(url)})">
-      <div class="hi-dot"></div>
-      <div class="hi-url">${url}</div>
-      <div class="hi-copy">선택</div>
-    </div>
-  `).join('');
+  document.getElementById('histSection').style.display = 'block';
+  document.getElementById('histList').innerHTML = hist.map(h => {
+    const url = h.url || h;
+    const x = h.x || false;
+    return `<div class="hist-item" onclick="applyUrl(${JSON.stringify(url)})">
+      <div class="h-dot${x?' x':''}"></div>
+      <div class="h-url">${url}</div>
+      <div class="h-pick">선택</div>
+    </div>`;
+  }).join('');
 }
 
-document.getElementById('urlInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') setUrl();
-});
+function init() {
+  loadToken();
+  const p = new URLSearchParams(window.location.search);
+  const shared = p.get('url') || p.get('text') || p.get('title');
+  if (shared) {
+    const m = shared.match(/https?:\/\/[^\s]+/);
+    applyUrl(m ? m[0] : shared);
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+  renderHist();
+}
 
+document.getElementById('urlInput').addEventListener('keydown', e => { if (e.key === 'Enter') setUrl(); });
 init();
 </script>
 </body>
