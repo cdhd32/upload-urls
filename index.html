@@ -74,25 +74,8 @@
     color: var(--text-dim);
   }
 
-  .badge {
-    font-size: 9px;
-    padding: 2px 7px;
-    border-radius: 3px;
-    letter-spacing: 0.04em;
-  }
-  .badge-green { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
-  .badge-x { background: rgba(29,155,240,0.1); color: var(--accent-x); border: 1px solid rgba(29,155,240,0.22); }
-
   .flex-row { display: flex; gap: 8px; margin-bottom: 10px; }
   .flex-row input { flex: 1; }
-
-  .pw-wrap { flex: 1; position: relative; }
-  .pw-wrap input { width: 100%; padding-right: 36px; }
-  .btn-eye {
-    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-    background: none; border: none; color: var(--text-dim);
-    font-size: 13px; cursor: pointer; padding: 4px; line-height: 1;
-  }
 
   input {
     background: var(--dim2);
@@ -123,8 +106,6 @@
   }
   .btn:hover { background: #303030; }
   .btn.muted { color: var(--text-dim); }
-
-  .token-hint { font-size: 10px; color: var(--text-dim); margin-top: 5px; letter-spacing: 0.02em; line-height: 1.5; }
 
   /* URL box */
   .url-box {
@@ -157,35 +138,14 @@
   .url-empty { font-size: 12px; color: var(--text-dim); font-style: italic; line-height: 1.7; }
 
   /* Status */
-  .status { display: none; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 4px; font-size: 11px; margin-bottom: 10px; line-height: 1.5; }
+  .status { display: none; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 4px; font-size: 11px; margin-bottom: 10px; }
   .status.show { display: flex; }
-  .status.loading { background: rgba(29,155,240,0.07); border: 1px solid rgba(29,155,240,0.18); color: var(--accent-x); }
-  .status.error { background: rgba(255,77,28,0.07); border: 1px solid rgba(255,77,28,0.18); color: #ff6b4a; }
   .status.info { background: rgba(255,209,102,0.07); border: 1px solid rgba(255,209,102,0.2); color: var(--accent2); }
-  .status.success { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.2); color: var(--green); }
 
-  .spinner { width: 12px; height: 12px; border: 1.5px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; flex-shrink: 0; }
-  @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* Result box */
-  .result-box {
-    background: var(--dim2);
-    border: 1px solid rgba(34,197,94,0.2);
-    border-radius: 4px;
-    padding: 14px;
-    margin-bottom: 10px;
-    display: none;
-    animation: fadeUp 0.2s ease;
-  }
-  .result-box.show { display: block; }
-  .result-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 11px; line-height: 1.5; }
-  .result-row:last-child { margin-bottom: 0; }
-  .result-key { color: var(--text-dim); flex-shrink: 0; width: 48px; }
-  .result-val { color: var(--fg); opacity: 0.9; word-break: break-all; }
-
-  /* Main buttons */
-  .btn-save {
+  /* Buttons */
+  .btn-copy {
     width: 100%;
     background: var(--accent);
     color: white;
@@ -199,27 +159,27 @@
     transition: all 0.15s;
     margin-bottom: 8px;
   }
-  .btn-save:active { transform: scale(0.98); }
-  .btn-save:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
-  .btn-save.ok { background: var(--green); }
+  .btn-copy:active { transform: scale(0.98); }
+  .btn-copy:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+  .btn-copy.ok { background: var(--green); }
 
-  .btn-copy {
+  .btn-send {
     width: 100%;
     background: var(--dim2);
     color: var(--fg);
-    border: 1px solid var(--dim);
+    border: 1px solid var(--accent);
     border-radius: 4px;
-    padding: 12px;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
+    padding: 13px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 19px;
+    letter-spacing: 0.1em;
     cursor: pointer;
-    text-align: center;
-    letter-spacing: 0.04em;
-    transition: border-color 0.15s;
+    transition: all 0.15s;
     margin-bottom: 8px;
   }
-  .btn-copy:hover { border-color: #3a3a3a; }
-  .btn-copy:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-send:hover { background: rgba(255,77,28,0.08); }
+  .btn-send:active { transform: scale(0.98); }
+  .btn-send:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 
   .btn-claude {
     width: 100%;
@@ -289,27 +249,8 @@
   <div class="hd">
     <div class="hd-label">URL Sharer</div>
     <div class="hd-title">URL <span>→</span> CLAUDE</div>
-    <div class="hd-sub">공유받은 URL을 분석해서 노션에 자동 저장</div>
+    <div class="hd-sub">공유받은 URL을 Claude 채팅에 바로 전달</div>
   </div>
-
-  <!-- Anthropic API Key -->
-  <div>
-    <div class="row-label">
-      <div class="lbl">Anthropic API Key</div>
-      <div class="badge badge-green" id="apiBadge" style="display:none">저장됨 ✓</div>
-    </div>
-    <div class="flex-row">
-      <div class="pw-wrap">
-        <input type="password" id="apiKeyInput" placeholder="sk-ant-..." />
-        <button class="btn-eye" onclick="toggleApiPw()">👁</button>
-      </div>
-      <button class="btn" onclick="saveApiKey()">저장</button>
-      <button class="btn muted" onclick="clearApiKey()">삭제</button>
-    </div>
-    <div class="token-hint">API 키는 로컬에만 저장됩니다. Anthropic Console에서 발급하세요.</div>
-  </div>
-
-  <div class="divider"></div>
 
   <!-- Quick Links -->
   <div class="row-label">
@@ -334,14 +275,6 @@
   <!-- Status -->
   <div class="status" id="statusEl"></div>
 
-  <!-- Result preview -->
-  <div class="result-box" id="resultBox">
-    <div class="result-row"><div class="result-key">제목</div><div class="result-val" id="rTitle"></div></div>
-    <div class="result-row"><div class="result-key">요약</div><div class="result-val" id="rSummary"></div></div>
-    <div class="result-row"><div class="result-key">태그</div><div class="result-val" id="rTags"></div></div>
-    <div class="result-row"><div class="result-key">작성일</div><div class="result-val" id="rDate"></div></div>
-  </div>
-
   <!-- Manual input -->
   <div class="flex-row" style="margin-bottom:14px">
     <input type="url" id="urlInput" placeholder="https://" style="flex:1" />
@@ -349,8 +282,8 @@
   </div>
 
   <!-- Actions -->
-  <button class="btn-save" id="saveBtn" onclick="analyzeAndSave()" disabled>분석 → 노션 저장</button>
   <button class="btn-copy" id="copyBtn" onclick="doCopy()" disabled>클립보드에 복사</button>
+  <button class="btn-send" id="sendBtn" onclick="sendToClaude()" disabled>Claude에 전달 → 노션 저장</button>
   <a href="https://claude.ai/project/019df9cc-647b-7014-b683-863cc0b52765" target="_blank" class="btn-claude">Claude 프로젝트 열기 →</a>
 
   <!-- History -->
@@ -363,69 +296,18 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const NOTION_MCP = 'https://mcp.notion.com/mcp';
-const DB_ID = '8fa0858e-71f3-48de-b6b7-26a0d90ef317';
 const PROJECT_URL = 'https://claude.ai/project/019df9cc-647b-7014-b683-863cc0b52765';
-
-const SYSTEM_PROMPT = `당신은 URL 아카이브 어시스턴트입니다. 사용자가 URL을 공유하면 web_search로 내용을 분석하고 노션 MCP로 데이터베이스에 저장합니다.
-
-## 노션 데이터베이스 ID
-${DB_ID}
-
-## 저장 필드
-- 제목: 한국어로 번역 + 괄호 안에 원어 병기 (예: 한국어 제목 (Original Title))
-- URL: 원본 URL
-- 한 줄 요약: 핵심 내용 한국어 한 문장 (50자 이내)
-- 주요 키워드 태그: 아래 태그 풀에서 5~10개 선택, 없으면 새로 생성
-- 작성일: 콘텐츠 원본 작성일 (모르면 오늘 날짜)
-
-## 현재 태그 풀
-AI, 개발, 뉴스, 레퍼런스, 디자인, 버튜버, 게임, 미연시, 스팀, 애니메이션, 서브컬처, 출시소식, 커뮤니티, 스타트업, 비즈니스, 인디게임, Unity, 오픈소스, LLM, 머신러닝, TinyML, 교육
-
-## 규칙
-- 없는 태그는 notion-update-data-source로 스키마에 추가 후 사용 (기존 태그 전부 포함해서 SET)
-- 모든 필드 한국어로 저장
-
-반드시 노션 저장 완료 후 아래 JSON 형식으로만 응답 (다른 텍스트 없이):
-{"title":"저장된 제목","summary":"한 줄 요약","tags":["태그1","태그2"],"date":"YYYY-MM-DD"}`;
 
 let currentUrl = '';
 let hist = [];
 try { hist = JSON.parse(localStorage.getItem('url_hist') || '[]'); } catch(e) {}
 
-// API Key
-function loadApiKey() {
-  const k = localStorage.getItem('anthropic_api_key') || '';
-  if (k) { document.getElementById('apiKeyInput').value = k; showApiBadge(true); }
-  return k;
-}
-function saveApiKey() {
-  const k = document.getElementById('apiKeyInput').value.trim();
-  if (!k) { toast('API 키를 입력해주세요'); return; }
-  localStorage.setItem('anthropic_api_key', k);
-  showApiBadge(true);
-  toast('✓ API Key 저장됨');
-}
-function clearApiKey() {
-  localStorage.removeItem('anthropic_api_key');
-  document.getElementById('apiKeyInput').value = '';
-  showApiBadge(false);
-  toast('API Key 삭제됨');
-}
-function showApiBadge(v) {
-  document.getElementById('apiBadge').style.display = v ? 'inline-flex' : 'none';
-}
-function toggleApiPw() {
-  const i = document.getElementById('apiKeyInput');
-  i.type = i.type === 'password' ? 'text' : 'password';
-}
-
 function isX(url) { return /^https?:\/\/(www\.)?(twitter|x)\.com\//.test(url); }
 
-function setStatus(type, msg, spin = false) {
+function setStatus(type, msg) {
   const el = document.getElementById('statusEl');
   el.className = `status show ${type}`;
-  el.innerHTML = spin ? `<div class="spinner"></div><span>${msg}</span>` : `<span>${msg}</span>`;
+  el.innerHTML = `<span>${msg}</span>`;
 }
 function clearStatus() { document.getElementById('statusEl').className = 'status'; }
 
@@ -435,7 +317,6 @@ function applyUrl(url) {
   document.getElementById('urlEmpty').style.display = 'none';
   document.getElementById('urlMeta').style.display = 'block';
   document.getElementById('urlVal').textContent = currentUrl;
-  document.getElementById('resultBox').classList.remove('show');
   clearStatus();
 
   const xUrl = isX(currentUrl);
@@ -448,8 +329,12 @@ function applyUrl(url) {
   typeEl.className = xUrl ? 'url-type x' : 'url-type';
 
   document.getElementById('urlInput').value = currentUrl;
-  document.getElementById('saveBtn').disabled = false;
   document.getElementById('copyBtn').disabled = false;
+  document.getElementById('sendBtn').disabled = false;
+
+  if (xUrl) {
+    setStatus('info', '𝕏 URL — Claude에 전달하면 트윗 내용을 분석합니다');
+  }
 }
 
 function setUrl() {
@@ -457,92 +342,10 @@ function setUrl() {
   if (v) applyUrl(v);
 }
 
-async function analyzeAndSave() {
+function sendToClaude() {
   if (!currentUrl) return;
-
-  const apiKey = localStorage.getItem('anthropic_api_key') || '';
-  if (!apiKey) {
-    setStatus('error', 'Anthropic API Key를 먼저 저장해주세요');
-    return;
-  }
-
-  const btn = document.getElementById('saveBtn');
-  btn.disabled = true;
-  document.getElementById('resultBox').classList.remove('show');
-  setStatus('loading', 'URL 분석 중...', true);
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-beta': 'mcp-client-2025-04-04'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        system: SYSTEM_PROMPT,
-        tools: [
-          { type: 'web_search_20250305', name: 'web_search' }
-        ],
-        mcp_servers: [
-          { type: 'url', url: NOTION_MCP, name: 'notion' }
-        ],
-        messages: [
-          { role: 'user', content: `이 URL을 분석해서 노션에 저장해줘: ${currentUrl}` }
-        ]
-      })
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err?.error?.message || `API 오류 (${res.status})`);
-    }
-
-    const data = await res.json();
-
-    // 텍스트 블록에서 JSON 파싱
-    const textBlock = data.content?.find(b => b.type === 'text');
-    const text = textBlock?.text || '';
-
-    let result = null;
-    try {
-      const clean = text.replace(/```json|```/g, '').trim();
-      result = JSON.parse(clean);
-    } catch(e) {
-      const m = text.match(/\{[\s\S]*?\}/);
-      if (m) {
-        try { result = JSON.parse(m[0]); } catch(e2) {}
-      }
-    }
-
-    if (result) {
-      document.getElementById('rTitle').textContent = result.title || '-';
-      document.getElementById('rSummary').textContent = result.summary || '-';
-      document.getElementById('rTags').textContent = Array.isArray(result.tags) ? result.tags.join(', ') : (result.tags || '-');
-      document.getElementById('rDate').textContent = result.date || '-';
-      document.getElementById('resultBox').classList.add('show');
-      setStatus('success', '✅ 노션 저장 완료!');
-      btn.textContent = '저장 완료 ✓';
-      btn.classList.add('ok');
-      saveHist(currentUrl, isX(currentUrl));
-      setTimeout(() => {
-        btn.textContent = '분석 → 노션 저장';
-        btn.classList.remove('ok');
-        btn.disabled = false;
-      }, 3000);
-    } else {
-      // JSON 파싱 실패해도 노션엔 저장됐을 수 있음
-      setStatus('info', '처리 완료 — 노션에서 결과를 확인해주세요');
-      btn.disabled = false;
-    }
-
-  } catch(e) {
-    setStatus('error', e.message);
-    btn.disabled = false;
-  }
+  const msg = encodeURIComponent(currentUrl);
+  window.open(`${PROJECT_URL}?q=${msg}`, '_blank');
 }
 
 async function doCopy() {
@@ -558,7 +361,11 @@ async function doCopy() {
     document.execCommand('copy');
     document.body.removeChild(ta);
   }
-  toast('✓ URL 복사됨');
+  toast('✓ URL 복사됨! Claude에 붙여넣기 하세요');
+  saveHist(currentUrl, isX(currentUrl));
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = '복사 완료 ✓'; btn.classList.add('ok');
+  setTimeout(() => { btn.textContent = '클립보드에 복사'; btn.classList.remove('ok'); }, 2000);
 }
 
 function toast(msg) {
@@ -600,7 +407,6 @@ function renderQuickLinks() {
 }
 
 function init() {
-  loadApiKey();
   renderQuickLinks();
   const p = new URLSearchParams(window.location.search);
   const shared = p.get('url') || p.get('text') || p.get('title');
