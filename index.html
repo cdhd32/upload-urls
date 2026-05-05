@@ -199,6 +199,24 @@
   .btn-copy:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
   .btn-copy.ok { background: var(--green); }
 
+  .btn-claude-send {
+    width: 100%;
+    background: var(--dim2);
+    color: var(--fg);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 13px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 19px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 8px;
+  }
+  .btn-claude-send:hover { background: rgba(255,77,28,0.08); }
+  .btn-claude-send:active { transform: scale(0.98); }
+  .btn-claude-send:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
   .btn-claude {
     width: 100%;
     background: transparent;
@@ -327,7 +345,8 @@
 
   <!-- Actions -->
   <button class="btn-copy" id="copyBtn" onclick="doCopy()" disabled>클립보드에 복사</button>
-  <a href="https://claude.ai" target="_blank" class="btn-claude">Claude 채팅 열기 →</a>
+  <button class="btn-claude-send" id="sendBtn" onclick="sendToClaude()" disabled>Claude에 전달 → 노션 저장</button>
+  <a href="https://claude.ai" target="_blank" class="btn-claude">Claude 채팅만 열기 →</a>
 
   <!-- History -->
   <div class="hist" id="histSection" style="display:none">
@@ -403,6 +422,7 @@ async function applyUrl(url) {
 
   document.getElementById('urlInput').value = currentUrl;
   document.getElementById('copyBtn').disabled = false;
+  document.getElementById('sendBtn').disabled = false;
 
   if (xUrl) {
     const id = getTweetId(currentUrl);
@@ -437,7 +457,12 @@ async function fetchTweet(id, token) {
   }
 }
 
-function setUrl() {
+function sendToClaude() {
+  if (!copyText) return;
+  const msg = encodeURIComponent(copyText);
+  window.open(`https://claude.ai/project/019df9cc-647b-7014-b683-863cc0b52765?q=${msg}`, '_blank');
+}
+
   const v = document.getElementById('urlInput').value.trim();
   if (v) applyUrl(v);
 }
