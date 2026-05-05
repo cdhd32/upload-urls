@@ -492,9 +492,9 @@ function renderHist() {
 // Project quick links
 const PROJECT_LINKS = [
   {
-    name: 'URL 아카이브 노션 DB',
-    url: 'https://www.notion.so/URL-35773012110d809c8953f820f7ba8fea',
-    icon: '📋'
+    name: 'URL 아카이브 Claude 프로젝트',
+    url: 'https://claude.ai/project/019df9cc-647b-7014-b683-863cc0b52765',
+    icon: '🤖'
   }
 ];
 
@@ -507,16 +507,14 @@ function renderQuickLinks() {
         <div class="ql-name">${p.name}</div>
         <div class="ql-url">${p.url}</div>
       </div>
-      <div class="ql-action">로드 →</div>
+      <div class="ql-action">열기 →</div>
     </div>
   `).join('');
 }
 
 function quickLoad(i) {
   const p = PROJECT_LINKS[i];
-  applyUrl(p.url);
-  // 스크롤을 URL박스로 이동
-  document.getElementById('urlBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  window.open(p.url, '_blank');
 }
 
 
